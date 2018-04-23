@@ -1,10 +1,10 @@
 FROM ubuntu
 MAINTAINER Elias Neves <elias-neves93@hotmail.com>
-WORKIR /conf.d
-ADD .
+WORKDIR /etc/sensu
 
-RUN apt-get update && apt-get install wget && wget -q https://sensu.global.ssl.fastly.net/apt/pubkey.gpg -O- | apt-key add - && CODENAME=`. /etc/os-release && echo $VERSION` && echo "deb https://sensu.global.ssl.fastly.net/apt $CODENAME main" | tee /etc/apt/sources.list.d/sensu.list && apt-get update && apt-get install sensu  && apt-get clean
+RUN apt-get update && apt-get install -y wget && wget http://sensu.global.ssl.fastly.net/apt/pool/trusty/main/s/sensu/sensu_1.3.3-1_amd64.deb && dpkg -i sensu*  && apt-get clean
 
+ADD . /etc/sensu
 LABEL Description="Sensu App Monitoring - Ubuntu - v0.1"
 EXPOSE 3000
 
